@@ -20,13 +20,16 @@ module.exports = (app) => {
   router.post("/adminLogin", AdminLogin.adminLogin);
   // router.put('/updateProduct',product.updateImg)
   router.post("/admin/add-product",AdminLogin.addproducts);
-  router.post("/admin/get-product",AdminLogin.getProducts);
+  router.get("/admin/get-product",AdminLogin.getProducts);
   router.post("/admin/update-product",AdminLogin.updateProduct);
   router.post("/admin/delete-product",AdminLogin.deleteProduct);
   router.post('/register',user.register);
   router.post('/login',user.login);
   router.post('/get-register-user',user.getRegister);
   router.post('/admin/get-ordered-user',AdminProduct.userProduct);
+  router.post('/admin/completed-order',AdminProduct.completedOrder)
+  router.post('/admin/buyProduct',AdminProduct.buyProduct)
+  router.post('/admin/canceled-order',AdminProduct.cancelOrder)
 
 
   app.use("/api", router);

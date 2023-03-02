@@ -6,6 +6,6 @@ module.exports = (mongoose) => {
        colour : String,
        pic : String
   })
-    const product = mongoose.model("product",productSchema)
-    return product
+    const Product = mongoose.model("product",productSchema)
+    return Product
 }

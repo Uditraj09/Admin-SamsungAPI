@@ -8,5 +8,6 @@ db.product = require("./product.models.js")(mongoose)
 db.adminLogin = require("./login.model.js")(mongoose)
 db.adproduct = require('./Adproduct.model')(mongoose)
 db.User = require('./user.models')(mongoose)
+db.order = require('./order.models')(mongoose)
 
 module.exports = db;

@@ -32,7 +32,7 @@ exports.addproducts = async (req, res) => {
     const pro = new adProduct({
       product: req.body.product,
       price: req.body.price,
-      colour: req.body.colour,
+      color: req.body.color,
       price: req.body.price,
       img: req.body.image,
     });
@@ -58,7 +58,6 @@ exports.getProducts = async (req, res) => {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   if (process.env.ADMIN_AUTH_CODE == req.query.auth_code) {
-    
     adProduct.find({}).then((data) => {
       if (data) {
         res.status(200).send({
@@ -92,7 +91,7 @@ exports.updateProduct = async (req, res) => {
   const pro = {
     product: req.body.product,
     price: req.body.price,
-    colour: req.body.colour,
+    color: req.body.color,
     price: req.body.price,
     img: req.body.img,
   };
@@ -124,7 +123,7 @@ exports.deleteProduct = async (req, res) => {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   if (process.env.ADMIN_AUTH_CODE == req.body.auth_code) {
-    adProduct.findByIdAndDelete(req.body.id).then((data) => {
+    adProduct.findByIdAndDelete(req.body._id).then((data) => {
       res.status(200).send({
         success: "true",
         message: "Product Deleted!",
