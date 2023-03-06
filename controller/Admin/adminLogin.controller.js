@@ -123,7 +123,7 @@ exports.deleteProduct = async (req, res) => {
     "Origin, X-Requested-With, Content-Type, Accept"
   );
   if (process.env.ADMIN_AUTH_CODE == req.body.auth_code) {
-    adProduct.findByIdAndDelete(req.body._id).then((data) => {
+    adProduct.findByIdAndDelete(req.body.id).then((data) => {
       res.status(200).send({
         success: "true",
         message: "Product Deleted!",
