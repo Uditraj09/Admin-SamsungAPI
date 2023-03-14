@@ -10,10 +10,6 @@ module.exports = (app) => {
   const AdminProduct = require("../controller/Admin/adminProduct.controller")
 
 
-
-
-
-
   router.post("/single", img.uploadImg);
   router.post("/addProduct", product.addProduct);
   router.get("/getProduct", product.allProduct);
@@ -30,6 +26,7 @@ module.exports = (app) => {
   router.post('/admin/completed-order',AdminProduct.completedOrder)
   router.post('/admin/buyProduct',AdminProduct.buyProduct)
   router.post('/admin/canceled-order',AdminProduct.cancelOrder)
+  router.post('/admin/add-to-cart',AdminProduct.addToCart)
 
 
   app.use("/api", router);

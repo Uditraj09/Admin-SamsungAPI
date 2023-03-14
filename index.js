@@ -1,23 +1,34 @@
 const express = require("express");
+// const admin = require("firebase-admin");
+const config = require("./config/db.config");
+// const bodyParser = require("body-parser"); / deprecated /
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const app = express();
-app.use(bodyParser.json());
-const path = require("path");
-const env = require("dotenv");
-const md5 = require("md5");
-const db = require("./models")
-env.config();
-app.use(express.json());
-const imgUpload = db.images;
+
 const dotenv = require("dotenv");
 dotenv.config();
-app.use(express.static("images"));
+
+const app = express();
+const server = require("http").createServer(app);
+
+var corsOptions = {
+  origin: "*",
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
+};
+
 app.use(cors());
+
+// parse requests of content-type - application/json
+app.use(express.json()); / bodyParser.json() is deprecated /
+
+app.use(express.static("public"));
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(
+  express.urlencoded({ extended: true })
+); / bodyParser.urlencoded() is deprecated /
+
 app.use(bodyParser.json());
-const port = 5000;
-const multer = require("multer");
 
 app.get("/", (req, res) => {
     res.send({ message: "server is running!" });
@@ -25,6 +36,7 @@ app.get("/", (req, res) => {
   
 // const formidable = require("express-formidable");
 // app.use(formidable());
+const db = require("./models");
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
@@ -40,7 +52,7 @@ db.mongoose
 
 require("./routes.js/uploadimg.routes")(app);
 
-
+const port = 5000;
 
 app.listen(port, () => {
   console.log(`Server is Listening on ${port}`);

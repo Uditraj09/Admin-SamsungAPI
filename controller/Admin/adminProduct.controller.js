@@ -1,8 +1,16 @@
 const db = require("../../models");
+const Cart = db.cart;
 const adProduct = db.adproduct;
 const User = db.User;
 const Order = db.order;
+
+
+
+
+
 const mongoose = require("mongoose");
+
+
 exports.userProduct = async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.params.userId }).populate(
@@ -16,12 +24,14 @@ exports.userProduct = async (req, res) => {
 };
 exports.buyProduct = async (req, res) => {
   try {
-    
     const buyProduct = new Order({
       userId: req.body.uId,
       product: JSON.parse(req.body.products),
     });
     const buyProductData = await buyProduct.save();
+    const userId = req.body.uId;
+    const purchasedProduct = Cart.find({userId});
+    await Cart.deleteMany(purchasedProduct);
     res.status(200).send({
       success: true,
       message: "Buy Product Details",
@@ -138,3 +148,78 @@ exports.cancelOrder = async (req, res) => {
 //     res.status(400).send('User does not exist!');
 //   }
 // };
+// exports.addtoCart = async(req,res)=>{
+//   try {
+//     const items = req.params.items;
+//     const  user = req.params.user;
+
+
+//   } catch (error) {
+    
+//   }
+// }
+
+
+// exports.addToCart = async (req, res, next) => {
+//   try {
+//     const productId = req.query.productId;
+//     const userId = req.query.userId;
+//     const status = 'pending';
+
+//     const product = await adProduct.find({_id:productId});
+
+//     if (!product) {
+//       return res.status(404).json({ message: 'Product not found' });
+//     }
+    
+//     let cart = await Cart.findOne({ userId });
+
+//     if (!cart) {
+//       cart = new Cart({ User, items: [] });
+//     }
+
+//     const existingItem = cart.items.find(item => item.productId.toString() === productId);
+
+//     if (existingItem) {
+//       existingItem.quantity++;
+//     } else {
+//       cart.items.push({ productId: productId });
+//     }
+
+//     await cart.save();
+
+//     const order = new Order({ user: userId, items: cart.items, status: status });
+//     await order.save();
+
+//     cart.items = [];
+//     await cart.save();
+
+//     res.status(200).json({ message: 'Order placed successfully', order: order });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+
+exports.addToCart = async(req,res)=>{
+  console.log(req.body);
+  try {
+    const cart_obj = new Cart({
+      items : JSON.parse(req.body.items),
+      userId : req.body.userId
+    });
+    const cartData = await cart_obj.save();
+    res.status(200).send(
+      {
+        success: true,
+        msg:"Added to Cart",
+        data:cartData
+      })    
+
+  } catch (error) {
+    res.status(400).send(
+      {
+        success: false,
+        msg:error.message
+      })
+  }
+}

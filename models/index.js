@@ -9,5 +9,8 @@ db.adminLogin = require("./login.model.js")(mongoose)
 db.adproduct = require('./Adproduct.model')(mongoose)
 db.User = require('./user.models')(mongoose)
 db.order = require('./order.models')(mongoose)
+db.cart = require("./Cart.model")(mongoose)
+
+
 
 module.exports = db;
