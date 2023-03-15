@@ -3,8 +3,8 @@ const adLogin = db.adminLogin;
 const adProduct = db.adproduct;
 
 exports.adminLogin = async (req, res) => {
-  const email = "Samsungadmin@gmail.com";
-  const password = "qwerty";
+  const email = "Samsung-Admin@gmail.com";
+  const password = "12345678";
   const user = { email: req.body.email, password: req.body.password };
   if (user.email === email && user.password === password) {
     return res.status(200).send({
